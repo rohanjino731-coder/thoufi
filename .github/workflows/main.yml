@@ -1,0 +1,19 @@
+name: GitHub Secrets Demo
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Use Secret
+        run: echo "Secret is being used safely"
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
