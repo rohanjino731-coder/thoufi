@@ -1,0 +1,35 @@
+name: Demo Workflow with Secrets
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      API_KEY: ${{ secrets.API_KEY }}   # Access secret globally
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Show Safe Message
+        run: echo "Workflow started successfully"
+
+      - name: Use API Key in Step
+        run: |
+          echo "Using API Key securely"
+          echo "Length of API Key is ${#API_KEY}"   # Safe usage example
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+
+      - name: Example with Script
+        run: |
+          if [ -z "$API_KEY" ]; then
+            echo "API Key is missing!"
+          else
+            echo "API Key is available and used securely."
+          fi
